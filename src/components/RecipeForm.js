@@ -6,7 +6,8 @@ class RecipeForm extends React.Component {
     super();
     this.state = {
       title: '',
-      ingredients: []
+      ingredients: [],
+      index: null
     }
     this.saveRecipe = this.saveRecipe.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -15,7 +16,8 @@ class RecipeForm extends React.Component {
   componentWillMount() {
     this.setState({
       title: this.props.formData.title || '',
-      ingredients: this.props.formData.ingredients || []
+      ingredients: this.props.formData.ingredients || [],
+      index: this.props.index || null
     });
   }
 
@@ -23,7 +25,7 @@ class RecipeForm extends React.Component {
     if (!this.state.title || !this.state.ingredients.length) {
       return alert('Your recipe must have a title and at least one ingredient');
     };
-    this.props.saveRecipe(this.state);
+    this.props.saveRecipe({title: this.state.title, ingredients: this.state.ingredients}, this.state.index);
   }
 
   handleChange(e) {
@@ -42,6 +44,7 @@ class RecipeForm extends React.Component {
           <ControlLabel>Recipe Title</ControlLabel>
           <FormControl
             type="text"
+            defaultValue={this.props.formData.title || ''}
             placeholder="Give your recipe a name"
             onChange={this.handleChange}
           />
@@ -51,6 +54,7 @@ class RecipeForm extends React.Component {
           <ControlLabel>Ingredients</ControlLabel>
           <FormControl
             componentClass="textarea"
+            defaultValue={this.props.formData.ingredients ? this.props.formData.ingredients.join(', ') : ''}
             placeholder="Ingredients, separated, by, Commas"
             onChange={this.handleChange}
           />

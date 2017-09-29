@@ -12,7 +12,8 @@ class App extends Component {
     this.state = {
       recipes: [],
       showModal: false,
-      formData: {}
+      formData: {},
+      index: null
     }
     this.showModal = this.showModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -40,7 +41,9 @@ class App extends Component {
 
   showModal(){
     this.setState({
-      showModal: true
+      showModal: true,
+      formData: {},
+      index: null
     });
   }
 
@@ -50,9 +53,13 @@ class App extends Component {
     });
   }
 
-  saveRecipe(recipe) {
+  saveRecipe(recipe, index) {
     const recipes = [...this.state.recipes];
-    recipes.push(recipe);
+    if (index) {
+      recipes[index] = recipe;
+    } else {
+      recipes.push(recipe);
+    }
     this.setState({recipes});
     this.closeModal();
   }
@@ -63,8 +70,12 @@ class App extends Component {
     this.setState({recipes});
   }
 
-  editRecipe() {
-    console.log('editing recipe');
+  editRecipe(recipe, index) {
+    this.setState({
+      showModal: true,
+      formData: recipe,
+      index
+    });
   }
 
   render() {
@@ -96,7 +107,7 @@ class App extends Component {
             <Modal.Title>{this.state.formData.title || 'Add a recipe'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <RecipeForm formData={this.state.formData} saveRecipe={this.saveRecipe} closeModal={this.closeModal}></RecipeForm>
+            <RecipeForm index={this.state.index} formData={this.state.formData} saveRecipe={this.saveRecipe} closeModal={this.closeModal}></RecipeForm>
           </Modal.Body>
         </Modal>
       </div>

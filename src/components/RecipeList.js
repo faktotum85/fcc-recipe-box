@@ -12,6 +12,9 @@ class RecipeList extends React.Component {
   }
 
   handleSelect(activeKey) {
+    if (this.state.activeKey === activeKey) {
+      activeKey = -1;
+    }
     this.setState({
       activeKey
     })
@@ -28,7 +31,7 @@ class RecipeList extends React.Component {
               <Recipe recipe={recipe}></Recipe>
               <ButtonToolbar>
                 <Button onClick={() => {this.props.deleteRecipe(index);this.handleSelect(-1);}}>Delete</Button>
-                <Button onClick={this.props.editRecipe}>Edit</Button>
+                <Button onClick={() => {this.props.editRecipe(recipe, index)}}>Edit</Button>
               </ButtonToolbar>
             </Panel>
           )
