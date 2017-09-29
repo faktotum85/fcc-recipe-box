@@ -17,6 +17,8 @@ class App extends Component {
     this.showModal = this.showModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.saveRecipe = this.saveRecipe.bind(this);
+    this.editRecipe = this.editRecipe.bind(this);
+    this.deleteRecipe = this.deleteRecipe.bind(this);
   }
 
   componentWillMount() {
@@ -33,7 +35,7 @@ class App extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    localStorage.setItem('recipes', JSON.stringify(this.state.recipes));
+    localStorage.setItem('recipes', JSON.stringify(nextState.recipes));
   }
 
   showModal(){
@@ -55,6 +57,16 @@ class App extends Component {
     this.closeModal();
   }
 
+  deleteRecipe(index) {
+    const recipes = [...this.state.recipes];
+    recipes.splice(index, 1);
+    this.setState({recipes});
+  }
+
+  editRecipe() {
+    console.log('editing recipe');
+  }
+
   render() {
     return (
       <div>
@@ -66,7 +78,11 @@ class App extends Component {
           </Row>
           <Row>
             <Col xs={12}>
-              <RecipeList recipes={this.state.recipes}/>
+              <RecipeList
+                recipes={this.state.recipes}
+                deleteRecipe={this.deleteRecipe}
+                editRecipe={this.editRecipe}
+              />
             </Col>
           </Row>
           <Row>
