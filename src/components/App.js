@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { PageHeader, Grid, Row, Col, Button } from 'react-bootstrap';
-import Modal from '../shims/Modal.js'; // TODO: swap out placeholder when react-bootstrap gets fixed
+import { PageHeader, Grid, Row, Col, Button, Modal } from 'react-bootstrap';
 import RecipeList from './RecipeList';
 import RecipeForm from './RecipeForm';
 import sampleRecipes from '../sampleRecipes';
